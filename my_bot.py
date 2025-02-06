@@ -1,27 +1,58 @@
-"""
-**Do NOT change the name of this function.**
+import random
 
-This function will be called every time anyone says anything on a channel where the bot lives.
-
-* It returns `True` if the bot notices something it wants to repond to.
-* You can have certain words or patterns in the messages trigger the bot.
-* You can have the bot respond differently to different users
-"""
-def should_i_respond(user_message, user_name):
-  if "robot" in user_message:
-    return True
-  else:
+def should_i_respond(message, user_name):
+    """Decides whether the bot should respond based on message content."""
+    message = message.lower()  
+    trigger_words = ["hello", "bot", "help", "joke", "how are you", "weather", "flip", "random", "math", "fact"]
+    
+    for word in trigger_words:
+        if word in message:
+            return True
+    
     return False
 
-"""
-**Do NOT change the name of this function.**
+def respond(message, user_name):
+    """Returns a response based on message content."""
+    message = message.lower()
 
-This function will be called every time the `should_i_respond` function returns `True`.
+    if "hello" in message:
+        return f"Hello {user_name.capitalize()}! How can I assist you?"
+    
+    if "bot" in message:
+        return "Yes, I am a bot! Beep boop 🤖"
 
-* This function returns a string.
-* The bot will post the returned string on the channel where the original message was sent.
-* You can have the bot respond differently to different messages and users
-"""
-def respond(user_message, user_name):
-  return f"""you said my name!!
-  {user_message.replace("robot", user_name)}"""
+    if "help" in message:
+        return "Sure! I can respond to messages like 'hello', 'joke', 'fact', or 'flip a coin'. Try one!"
+
+    if "joke" in message:
+        jokes = [
+            "Why don’t skeletons fight each other? They don’t have the guts!",
+            "I'm reading a book on anti-gravity. It's impossible to put down!",
+            "Why did the math book look sad? Because it had too many problems."
+        ]
+        return random.choice(jokes)
+
+    if "how are you" in message:
+        return "I'm just a bot, but I'm feeling great! Thanks for asking."
+
+    if "weather" in message:
+        return "I can't check the weather, but if it's sunny, enjoy it!"
+
+    if "flip" in message:
+        return f"The coin landed on: {'Heads' if random.choice([True, False]) else 'Tails'}"
+
+    if "random" in message:
+        return f"Here's a random number: {random.randint(1, 100)}"
+
+    if "math" in message:
+        return f"Did you know? 2 + 2 = {2 + 2}. Mind-blowing! 😆"
+
+    if "fact" in message:
+        facts = [
+            "Honey never spoils!",
+            "Octopuses have three hearts!",
+            "Bananas are berries, but strawberries aren't."
+        ]
+        return random.choice(facts)
+
+    return "I didn't quite understand that. Try asking me something else!"
